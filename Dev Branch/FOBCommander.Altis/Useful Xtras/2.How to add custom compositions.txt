@@ -1,0 +1,65 @@
+//how to add a custom compositiontion to mission
+//copy and paste these steps 1 by 1 in debug menu while standing in center of your compositoin
+//do 1 at a time/ make sure their spread out at least 50m apart
+//then paste final chat gpt output to mission/mission emplacement variant section in script
+
+1) grab cusotm composition
+======================
+
+// Initialize global log if needed
+if (isNil "TAG_fullObjectLog") then {
+    TAG_fullObjectLog = "";
+};
+
+// Grab objects from player’s location in 50m radius
+private _objectsData = [getPos player, 50] call BIS_fnc_objectsGrabber;
+
+// Clean and nicely formatted for SQF reuse
+private _entryHeader = format ["// === OBJECT GRAB @ %1 | Time: %2 ===", mapGridPosition player, diag_tickTime];
+private _entryBody = str _objectsData;
+private _formattedEntry = format ["%1\n%2\n\n", _entryHeader, _entryBody];
+
+// Append to global log string
+TAG_fullObjectLog = TAG_fullObjectLog + _formattedEntry;
+
+// Log to RPT (external, permanent)
+diag_log _formattedEntry;
+
+// Confirm success
+systemChat "Composition logged.";
+hint "Objects grabbed and saved.";
+
+2) log all to clipboard
+========================
+copyToClipboard TAG_fullObjectLog;
+hint "Copied full log to clipboard!";
+
+3) chat gpt promt
+======================    
+The next prompt I give you will be an array to add to this.
+Clean it up and shorten it.
+Remove comments and unnecessary numbers.
+Then add everything properly into this system.
+Output the entire new code, not just a small snippet.
+add comments saying first emplacement etc..
+
+private _emplacementVariants = [
+    [
+
+    ],
+
+    [
+
+    ]
+];
+
+
+//rarely needed.. self clears after mission restart anyway. someone might need tho
+4) clear clipboard
+=======================
+copyToClipboard "";
+hint "Clipboard cleared.";
+
+
+
+

@@ -1,0 +1,72 @@
+author = "Spinoza";
+onLoadName = "F.O.B. Commander";
+onLoadMission = "Build, Command, Dominate.";
+loadScreen = "media\images\loadScreens\loadScreenImage.paa";
+
+class CfgSounds {
+    sounds[] = {};
+
+    //========================================//
+    //             Support Sounds             //
+    //========================================//
+    class supportConfirmed {
+        name = "supportConfirmed";
+        sound[] = {"sounds\supportConfirmed.ogg", 1, 1};
+        titles[] = {};
+    };
+
+    class supportDeployed {
+        name = "supportDeployed";
+        sound[] = {"sounds\supportDeployed.ogg", 1, 1};
+        titles[] = {};
+    };
+
+    class supportLanded {
+        name = "supportLanded";
+        sound[] = {"sounds\supportLanded.ogg", 1, 1};
+        titles[] = {};
+    };
+
+    //========================================//
+    //            FOB & Camp Sounds           //
+    //========================================//
+    class fobDig {
+        name = "fobDig";
+        sound[] = {"sounds\fobDig.ogg", 1, 1};
+        titles[] = {};
+    };
+
+    class campDig {
+        name = "campDig";
+        sound[] = {"sounds\campDig.ogg", 1.5, 1};
+        titles[] = {};
+    };
+
+    class sitrepSound {
+        name = "sitrepSound";
+        sound[] = {"sounds\sitrepSound.ogg", 1, 1};
+        titles[] = {};
+    };
+
+    class missionBrief {
+        name = "missionBrief";
+        sound[] = {"sounds\missionBrief.ogg", 1, 1};
+        titles[] = {};
+    };
+
+    class missionComplete {
+        name = "missionComplete";
+        sound[] = {"sounds\missionComplete.ogg", 1, 1};
+        titles[] = {};
+    };
+};
+
+
+
+
+
+
+
+
+
+

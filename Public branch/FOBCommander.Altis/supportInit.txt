@@ -1,0 +1,5 @@
+this addAction ["<t color='#00FF00' size='1.2'>-Request Supply Drop-</t>", { execVM "supports\supplyDrop.sqf"; }, nil, 110, true, true, "", "", 5];
+this addAction ["<t color='#00FF00' size='1.2'>-Request Vehicle Drop-</t>", { execVM "supports\vehicleDrop.sqf"; }, nil, 109, true, true, "", "", 5];
+this addAction ["<t color='#00FF00' size='1.2'>-Request Heli Transport-</t>", { execVM "supports\heliTransport.sqf"; }, nil, 108, true, true, "", "", 5];
+this addAction ["<t color='#00FF00' size='1.2'>-Request CAS Attack Heli-</t>", { execVM "supports\heliGunship.sqf"; }, nil, 107, true, true, "", "", 5];
+this addAction ["<t color='#00FF00' size='1.2'>-Request CAS Guided Missle-</t>", { execVM "supports\planeGunship.sqf"; }, nil, 106, true, true, "", "", 5];
