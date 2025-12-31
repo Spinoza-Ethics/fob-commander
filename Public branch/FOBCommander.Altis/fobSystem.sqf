@@ -183,38 +183,62 @@ player addAction ["<t color='#3399FF' size='1.2'>-Build F.O.B.-</t>", {
                 
             }, [_fobObjects, _marker], 97.1, true, true, "", "true", 5, false, "", ""];
             
-            //========================================//
-            //          Side Mission Function         //
-            //========================================//
-            _vehicleSign addAction [
-                "<t color='#FFA500' size='1.2'>Request Mission</t> <t color='#00FF00'>(XP)</t>",
-                {
-                    params ["_target", "_caller", "_actionId"];
-                    private _lastMissionTime = missionNamespace getVariable ["lastSideMissionTime", -9999];
-                    private _now = time;
-                    if (_now - _lastMissionTime < 10) exitWith {
-                        private _remaining = 10 - (_now - _lastMissionTime);
-                        _caller sideChat format ["Side mission cooldown: %1 seconds remaining.", ceil _remaining];
-                    };
-                    missionNamespace setVariable ["lastSideMissionTime", _now];
-                    private _missionConfig = [
-                        ["Downed Chopper", "missions\downedChopper.sqf"],
-                        ["Radio Tower", "missions\radioTower.sqf"],
-                        ["Ammo Cache", "missions\ammoCache.sqf"],
-                        ["Fuel Depot", "missions\fuelDepot.sqf"],
-                        ["Anti-Air", "missions\antiAir.sqf"],
-                        ["Stolen NATO Vehicle", "missions\stolenVehicle.sqf"],
-                        ["Intel", "missions\retriveIntel.sqf"],
-                        ["Vehicle Wreck Site", "missions\vehicleWreck.sqf"],
-                        ["Rescue HVT", "missions\rescueHVT.sqf"],
-                        ["Eliminate HVT", "missions\eliminateHVT.sqf"]
-                    ];
-                    private _selectedMissionData = selectRandom _missionConfig;
-                    [_selectedMissionData, _caller] call fnc_executeMission;
-                    playSound "missionBrief";
-                },
-                nil, 98.9, true, true, "", "true", 5, false, "", ""
-            ];
+			//========================================//
+			//          Side Mission Function         //
+			//========================================//
+			_vehicleSign addAction [
+				"<t color='#FFA500' size='1.2'>Request Mission</t> <t color='#00FF00'>(XP)</t>",
+				{
+					params ["_target", "_caller", "_actionId"];
+					private _lastMissionTime = missionNamespace getVariable ["lastSideMissionTime", -9999];
+					private _now = time;
+					if (_now - _lastMissionTime < 10) exitWith {
+						private _remaining = 10 - (_now - _lastMissionTime);
+						_caller sideChat format ["Side mission cooldown: %1 seconds remaining.", ceil _remaining];
+					};
+					missionNamespace setVariable ["lastSideMissionTime", _now];
+					
+					private _missionConfig = [
+						["Downed Chopper", "missions\downedChopper.sqf"],
+						["Radio Tower", "missions\radioTower.sqf"],
+						["Ammo Cache", "missions\ammoCache.sqf"],
+						["Fuel Depot", "missions\fuelDepot.sqf"],
+						["Anti-Air", "missions\antiAir.sqf"],
+						["Stolen NATO Vehicle", "missions\stolenVehicle.sqf"],
+						["Intel", "missions\retriveIntel.sqf"],
+						["Vehicle Wreck Site", "missions\vehicleWreck.sqf"],
+						["Rescue HVT", "missions\rescueHVT.sqf"],
+						["Eliminate HVT", "missions\eliminateHVT.sqf"]
+					];
+					
+					// Get last 2 missions to prevent repeats
+					private _lastMissions = missionNamespace getVariable ["lastSideMissions", []];
+					
+					// Filter out recently used missions
+					private _availableMissions = _missionConfig select {
+						!(((_x select 0) in _lastMissions))
+					};
+					
+					// If all missions were recently used, reset the history
+					if (count _availableMissions == 0) then {
+						_availableMissions = _missionConfig;
+						_lastMissions = [];
+					};
+					
+					private _selectedMissionData = selectRandom _availableMissions;
+					
+					// Update mission history (keep last 2 missions)
+					_lastMissions pushBack (_selectedMissionData select 0);
+					if (count _lastMissions > 2) then {
+						_lastMissions deleteAt 0; // Remove oldest mission
+					};
+					missionNamespace setVariable ["lastSideMissions", _lastMissions];
+					
+					[_selectedMissionData, _caller] call fnc_executeMission;
+					playSound "missionBrief";
+				},
+				nil, 98.9, true, true, "", "true", 5, false, "", ""
+			];
 
             //========================================//
             //       Logistic Mission Function        //
