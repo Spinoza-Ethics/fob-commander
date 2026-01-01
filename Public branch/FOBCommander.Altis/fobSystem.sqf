@@ -77,7 +77,7 @@ player addAction ["<t color='#3399FF' size='1.2'>-Build F.O.B.-</t>", {
     fnc_cleanupSubmenu = {
         params ["_objectWithActions", "_submenuVarName", "_distanceThreshold"];
         private _startTime = time;
-        private _timeoutDuration = 10;
+        private _timeoutDuration = 30;
         private _cleanupCondition = {
             !(player distance2D _objectWithActions < _distanceThreshold) ||
             (time - _startTime > _timeoutDuration)
